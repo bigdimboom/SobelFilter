@@ -1,12 +1,13 @@
 
 #include "Sobel.h"
+#include <assert.h>
 
 #define DEFAULT_THRESHOLD  4000
 
 //#define DEFAULT_FILENAME "BWstop-sign.ppm"
 #define DEFAULT_FILENAME "haha.ppm"
 
-void ComputeOnGPU(unsigned int* source, int* result, int xsize, int ysize, int thresh);
+void ComputeOnGPU(int* source, int* result, int xsize, int ysize, int thresh);
 bool CompareResults(int* result1, int* result2, int ssize, int ysize);
 
 int main(int argc, char **argv)
@@ -51,7 +52,7 @@ int main(int argc, char **argv)
 	//the Real Meat
 	Sobel_Gold(pic, result_CPU, xsize, ysize, thresh);
 	//Compute On Device
-	ComputeOnGPU(pic, result_GPU, xsize, ysize, thresh);
+	ComputeOnGPU((int*)pic, result_GPU, xsize, ysize, thresh);
 
 	if (!CompareResults(result_CPU, result_CPU, xsize, ysize)){
 		write_ppm("result_error.ppm", xsize, ysize, 255, result_GPU);
@@ -69,9 +70,36 @@ int main(int argc, char **argv)
 	return EXIT_SUCCESS;
 }
 
-void ComputeOnGPU(unsigned int* source, int* result, int xsize, int ysize, int thresh)
+void ComputeOnGPU(int* source, int* result, int xsize, int ysize, int thresh)
 {
+	assert(source != NULL && result != NULL);
 
+	int size = xsize * ysize * sizeof(int);
+	int *d_source = 0;
+	int *d_result = 0;
+
+	cudaError_t error;
+
+	error = cudaMalloc((void**)&d_source, size);
+	error = cudaMalloc((void**)&d_result, size);
+
+	if (error != cudaSuccess)
+	{
+		fprintf(stderr, "can not allocate cuda memory\n");
+	}
+
+	cudaMemcpy(d_source, source, size, cudaMemcpyHostToDevice);
+
+	//Kernel Launch
+
+
+
+
+	//End Kernel
+	cudaMemcpy(result, d_result, size, cudaMemcpyDeviceToHost);
+
+	cudaFree(d_source);
+	cudaFree(d_result);
 }
 
 bool CompareResults(int* result1, int* result2, int xsize, int ysize)

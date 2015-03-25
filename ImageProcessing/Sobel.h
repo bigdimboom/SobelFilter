@@ -5,6 +5,10 @@
 #include <fcntl.h>
 #include "string.h"
 
+#include "cuda_runtime.h"
+#include "device_launch_parameters.h"
+
+
 //PPM Reader
 unsigned int *read_ppm(char *filename, int * xsize, int * ysize, int *maxval);
 //PPM Writer

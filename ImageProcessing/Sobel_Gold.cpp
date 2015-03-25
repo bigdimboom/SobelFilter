@@ -1,6 +1,6 @@
 #include "Sobel.h"
 
-
+// Running on CPU
 void Sobel_Gold(unsigned int* pic, int* result, int xsize, int ysize, int thresh) {
 
 	int magnitude, sum1, sum2;
