@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 		if (argc == 2) { // default file but specified threshhold
 			thresh = atoi(argv[1]);
 		}
-		fprintf(stderr, "file %s    threshold %d\n", filename, thresh);
+		fprintf(stderr, "file %s threshold %d\n", filename, thresh);
 	}
 
 	int xsize, ysize, maxval;

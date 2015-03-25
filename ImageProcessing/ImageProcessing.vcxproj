@@ -81,6 +81,7 @@
     <ClCompile Include="main.cu" />
     <ClCompile Include="Sobel.cpp" />
     <ClCompile Include="Sobel_Gold.cpp" />
+    <ClCompile Include="Sobel_Kernel.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sobel.h" />

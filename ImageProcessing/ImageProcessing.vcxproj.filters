@@ -24,6 +24,9 @@
     <ClCompile Include="Sobel_Gold.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sobel_Kernel.cu">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sobel.h">
